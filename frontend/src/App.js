@@ -2,17 +2,26 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 import Input from "./components/input";
+import NavBar from "./components/navbar";
+import TabComponent from "./components/tabs";
+
 import { Row, Col } from "react-bootstrap";
 import Paper from '@material-ui/core/Paper';
-import NavBar from './components/navbar';
-import Alert from 'react-bootstrap/Alert';
+import Alert from "react-bootstrap/Alert";
+
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import AccordTab from './components/accordian';
+
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 class App extends Component {
 
   state = {
     word: '',
-    meanings: null,
-    examples: null,
+    output: null,
     error: null
   }
 
@@ -21,12 +30,12 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar />
-        <div className="container-fluid " style={{
+        {/* <div className="container-fluid " style={{
           position: 'absolute', left: '50%', top: '40%',
           transform: 'translate(-50%, -50%)',
-          width: '100%', height: '50%'
+          width: '100%', height: '50%', 
         }}>
-          <Row style={{ backgroundColor: 'aliceblue' }}>
+          <Row style={{ backgroundColor: '' }}>
             <Col className='col-lg-4 col-12 ' >
               <Input
                 change={this.handleChange}
@@ -39,7 +48,26 @@ class App extends Component {
             </Col>
 
           </Row>
+        </div> */}
+        <div className="container" style={{
+          display: 'flexbox', justifyContent: 'center', alignItems: 'center',
+          width: '70%',
+        }}>
+
+          <Input
+            change={this.handleChange}
+            submit={this.onSubmit} />
+
         </div>
+
+        <div>
+
+          <Paper style={{ height: '100%', width: '100%' }}>
+            {this.listItems()}
+          </Paper>
+
+        </div>
+
       </React.Fragment>
 
     );
@@ -47,19 +75,32 @@ class App extends Component {
 
   listItems = () => {
     if (this.state.error == null) {
-      var meanings = this.state.meanings;
-      // var examples = this.state.examples;
-      if (meanings != null) {
+      var out = this.state.output;
+      if (out != null) {
         return (
-          <Alert transition>
-            <div>
-            <label className='p-3'><b>Meanings</b></label>
-            <ul>
-              {meanings.map((m) =>
-                <li key={m}>{m}</li>)}
-            </ul>
+          
+          <div>
+            <Tabs className="myClass" id="controlled-tab-example" >
+
+              <Tab eventKey={1} title="Meanings">
+                <ul>
+                  {out.map((o) => {
+                    if (o[1] !== '') {
+                      return <li key={o[0]}>{o[0]}.<AccordTab message={o[1]}/></li>;
+                    }
+                    else {
+                      return <li key={o[0]}>{o[0]}.</li>
+                    }
+                  }
+                  )}
+                </ul>
+              </Tab>
+              <Tab eventKey={2} title="Antonyms">Tab 2 content</Tab>
+              <Tab eventKey={3} title="Synonyms" disabled>Tab 3 content</Tab>
+
+            </Tabs>
+
           </div>
-          </Alert>
 
         );
       }
@@ -68,7 +109,8 @@ class App extends Component {
       }
     }
     else {
-      return (<p>{this.state.error}</p>);
+      return (
+        <p style={{ color: 'red', fontWeight: 'bold' }} className='p-3'>{this.state.error}</p>);
     }
   }
 
@@ -87,8 +129,7 @@ class App extends Component {
   updateRes = (data) => {
     if ('error' in data === false) {
       this.setState({
-        meanings: data['meanings'],
-        examples: data['examples'],
+        output: data['output'],
         error: null
       })
     }

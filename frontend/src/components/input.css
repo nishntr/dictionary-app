@@ -1,0 +1,18 @@
+input {
+    width: 100%;
+    text-align: center;
+    transition: ease-in-out all 0.20s;
+    border: 2px solid #748ca1;
+    border-radius: 6px;
+    font-size: 20px;
+    padding: 2px;
+    margin-top: -10px;
+  }
+  input:focus {
+    outline: none;
+    border-color: #3480eb;
+    box-shadow: 0 0 8px #348ceb;
+  }
+  button{
+      font-family: 'Lucida Sans';
+  }

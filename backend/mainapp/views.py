@@ -24,18 +24,19 @@ class DictionaryView(APIView):
             # for i in range(len(defs)):
             #     print('examples' in defs[i])
             
-            meaning = []
-            examples = []
+            # meaning = []
+            # examples = []
+            output = []
             for i in range(len(defs)):
-                meaning.append(defs[i]['definitions'][0])
+                m = defs[i]['definitions'][0]
                 if 'examples' in defs[i]:
-                    examples.append(defs[i]['examples'][0]['text'])
+                    e = defs[i]['examples'][0]['text']
+                    
                 else:
-                    examples.append('')
-                
+                    e = ''
+                output.append([m,e])
             context = {
-                'meanings': meaning,
-                'examples': examples
+                'output':output
                 
             }
             
