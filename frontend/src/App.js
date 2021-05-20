@@ -1,71 +1,51 @@
-import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { Component, createRef, useState } from 'react';
 import axios from 'axios';
 import Input from "./components/input";
 import NavBar from "./components/navbar";
 import TabComponent from "./components/tabs";
+import AccordTab from './components/accordian';
 
-import { Row, Col } from "react-bootstrap";
+
+import Button from "react-bootstrap/Button";
 import Paper from '@material-ui/core/Paper';
-import Alert from "react-bootstrap/Alert";
 
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import AccordTab from './components/accordian';
 
+
+import 'bootstrap/dist/css/bootstrap.css';
+import './app.css';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 class App extends Component {
-
+  constructor(props) {
+    super(props);
+    this.input = createRef();
+  }
   state = {
     word: '',
     output: null,
-    error: null
+    error: null,
+    key: 1,
   }
-
 
   render() {
     return (
       <React.Fragment>
         <NavBar />
-        {/* <div className="container-fluid " style={{
-          position: 'absolute', left: '50%', top: '40%',
-          transform: 'translate(-50%, -50%)',
-          width: '100%', height: '50%', 
-        }}>
-          <Row style={{ backgroundColor: '' }}>
-            <Col className='col-lg-4 col-12 ' >
-              <Input
-                change={this.handleChange}
-                submit={this.onSubmit} />
-            </Col>
-            <Col className='col-lg-6 col-xs-12  p-1' >
-              <Paper style={{ height: '100%', width: '100%' }}>
-                {this.listItems()}
-              </Paper>
-            </Col>
 
-          </Row>
-        </div> */}
-        <div className="container" style={{
-          display: 'flexbox', justifyContent: 'center', alignItems: 'center',
-          width: '70%',
-        }}>
-
-          <Input
-            change={this.handleChange}
-            submit={this.onSubmit} />
+        <div className="container" id="input" >
+          <Input ref={this.input} 
+              submit={this.onSubmit} />
 
         </div>
 
-        <div>
-
-          <Paper style={{ height: '100%', width: '100%' }}>
+        <div id='item'>
+          <Paper id="paper" >
             {this.listItems()}
           </Paper>
-
         </div>
 
       </React.Fragment>
@@ -78,15 +58,17 @@ class App extends Component {
       var out = this.state.output;
       if (out != null) {
         return (
-          
-          <div>
-            <Tabs className="myClass" id="controlled-tab-example" >
+
+          <div >
+            <Tabs defaultActiveKey={1} activeKey={this.state.key} variant="pills" fill
+              onSelect={(k) => { this.setState({ key: k }) }}
+              id="controlled-tab-example" >
 
               <Tab eventKey={1} title="Meanings">
                 <ul>
                   {out.map((o) => {
                     if (o[1] !== '') {
-                      return <li key={o[0]}>{o[0]}.<AccordTab message={o[1]}/></li>;
+                      return <li key={o[0]}>{o[0]}.<AccordTab message={o[1]} /></li>;
                     }
                     else {
                       return <li key={o[0]}>{o[0]}.</li>
@@ -95,8 +77,24 @@ class App extends Component {
                   )}
                 </ul>
               </Tab>
-              <Tab eventKey={2} title="Antonyms">Tab 2 content</Tab>
-              <Tab eventKey={3} title="Synonyms" disabled>Tab 3 content</Tab>
+              <Tab eventKey={2} title="Synonyms">
+
+                <ul>
+                  {out.map((o, i) => {
+                    if (o[2].length > 0) {
+                      return <li>{o[2].map((s) => {
+                        return <span><Button size='sm' onClick={this.onSynSubmit.bind(this, s)} style={{ textDecoration: "none" }} variant="link">{s}</Button> </span>;
+                      })}</li>;
+
+
+                    }
+                    else {
+                      return;
+                    }
+
+                  })}
+                </ul>
+              </Tab>
 
             </Tabs>
 
@@ -115,14 +113,21 @@ class App extends Component {
   }
 
 
-  handleChange = (e) => {
-    this.state.word = e.target.value;
+
+  onSubmit = (w) => {
+    this.input.current.handleLoading(true);
+    this.setState({ word: w });
+    axios
+      .post('/api', { data: w })
+      .then((res) => this.updateRes(res.data));
   }
 
-  onSubmit = () => {
-    console.log('pressed');
+  onSynSubmit = (s) => {
+    this.input.current.handleUpdate(s);
+    this.input.current.handleLoading(true);
+    this.setState({ word: s });
     axios
-      .post('/api', { data: this.state.word })
+      .post('/api', { data: s })
       .then((res) => this.updateRes(res.data));
   }
 
@@ -130,7 +135,8 @@ class App extends Component {
     if ('error' in data === false) {
       this.setState({
         output: data['output'],
-        error: null
+        key: 1,
+        error: null,
       })
     }
     else {
@@ -138,9 +144,11 @@ class App extends Component {
       this.setState({
         meanings: null,
         examples: null,
-        error: data['error']
+        error: data['error'],
       })
     }
+    this.input.current.handleLoading(false);
+
   }
 }
 

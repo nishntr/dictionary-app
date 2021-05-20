@@ -1,0 +1,14 @@
+#item{
+    padding-top: 20px;
+
+}
+
+#input{
+    display: 'flexbox'; justify-content: 'center';align-items: 'center';
+    width: '70%',
+  }
+
+#paper{
+    height: '100%'; width: '100%' 
+}
+  

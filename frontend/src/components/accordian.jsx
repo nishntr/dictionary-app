@@ -13,9 +13,9 @@ class AccordTab extends Component {
             <Accordion >
 
 
-                <Accordion.Toggle as={Button} variant="text" eventKey="0">
-                    <p style={{color:'darkBlue'}}>See Example</p>
-                        </Accordion.Toggle>
+                <Accordion.Toggle as="a" variant="text" eventKey="0">
+                    <div style={{color:'darkBlue',cursor:'pointer',width:'fit-content'}}>See Example</div>
+                </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                     <p style={{color:'gray'}}>{this.props.message}</p>
                 </Accordion.Collapse>

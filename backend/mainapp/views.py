@@ -19,27 +19,34 @@ class DictionaryView(APIView):
         url = 'https://od-api.oxforddictionaries.com/api/v2/entries/'  + language + '/'  + word.lower()
         r = requests.get(url, headers = {'app_id' : app_id, 'app_key' : app_key})
         data = json.loads(r.text)
-        if 'error' not in data:
-            defs = data['results'][0]['lexicalEntries'][0]['entries'][0]['senses']
-            # for i in range(len(defs)):
-            #     print('examples' in defs[i])
-            
-            # meaning = []
-            # examples = []
-            output = []
-            for i in range(len(defs)):
-                m = defs[i]['definitions'][0]
-                if 'examples' in defs[i]:
-                    e = defs[i]['examples'][0]['text']
-                    
-                else:
-                    e = ''
-                output.append([m,e])
-            context = {
-                'output':output
+        try:
+            if 'error' not in data:
+                defs = data['results'][0]['lexicalEntries'][0]['entries'][0]['senses']
+                # for i in range(len(defs)):
+                #     print('examples' in defs[i])
                 
-            }
-            
-        else:
-            context = {'error': 'Word is not found in the dictionary'}
+                # meaning = []
+                # examples = []
+                output = []
+                for i in range(len(defs)):
+                    m = defs[i]['definitions'][0]
+                    s = []
+                    if 'examples' in defs[i]:
+                        e = defs[i]['examples'][0]['text']
+                        
+                    else:
+                        e = ''
+                    if 'synonyms' in defs[i]:
+                        for item in defs[i]['synonyms']:
+                            s.append(item['text'])
+                    output.append([m,e,s])
+                context = {
+                    'output':output
+                    
+                }
+                
+            else:
+                context = {'error': 'Word is not found in the dictionary'}
+        except:
+            context = {'error': 'Server Error'}
         return Response(context,status=200)
