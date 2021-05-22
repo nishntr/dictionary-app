@@ -1,3 +1,28 @@
+.button {
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.button:hover {
+  background-color: #2eddd4;
+  box-shadow: 0px 10px 10px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
 input {
     width: 100%;
     text-align: center;
@@ -7,12 +32,13 @@ input {
     font-size: 20px;
     padding: 2px;
     margin-top: -10px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
   }
-  input:focus {
-    outline: none;
-    border-color: #3480eb;
-    box-shadow: 0 0 8px #348ceb;
-  }
-  button{
-      font-family: 'Lucida Sans';
-  }
+input:focus { 
+  outline: none;
+  border-color: #2EE59D;
+  box-shadow: 0 0 8px #34eb90;
+}
+
+  

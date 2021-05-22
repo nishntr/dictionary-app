@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 
 import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -11,7 +9,6 @@ class AccordTab extends Component {
     render() {
         return (
             <Accordion >
-
 
                 <Accordion.Toggle as="a" variant="text" eventKey="0">
                     <div style={{color:'darkBlue',cursor:'pointer',width:'fit-content'}}>See Example</div>

@@ -1,14 +1,48 @@
 #item{
-    padding-top: 20px;
+    margin-top: 40px;
+    min-height: 100px;
+
+}
+#itempost{
+    margin-top: 40px;
+    min-height: 200px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease 0s;
 
 }
 
-#input{
-    display: 'flexbox'; justify-content: 'center';align-items: 'center';
-    width: '70%',
+.body{
+    background-color: black;
+}
+.input{
+    display: flexbox; justify-content: center;align-items: center;
+    width: 70%;
+    
   }
 
-#paper{
-    height: '100%'; width: '100%' 
+Paper{
+    min-height: 60px;
 }
   
+.tabClass ul > li > a {
+    background-color: white;
+    color: red;
+}
+.tabClass ul > li > a:hover {
+    background-color: pink;
+}
+
+/* Active tab */
+.tabClass ul > li.active > a,
+.tabClass ul > li.active > a:hover,
+.tabClass ul > li.active > a:focus {
+    background-color: red;
+    color: white;
+}
+
+/* Disabled tab */
+.tabClass ul > li.disabled > a {
+    background-color: lightgray;
+    color: darkgray;
+}
+

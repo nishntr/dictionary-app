@@ -2,19 +2,17 @@ import React, { Component, createRef, useState } from 'react';
 import axios from 'axios';
 import Input from "./components/input";
 import NavBar from "./components/navbar";
-import TabComponent from "./components/tabs";
 import AccordTab from './components/accordian';
 
 
 import Button from "react-bootstrap/Button";
 import Paper from '@material-ui/core/Paper';
-
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
 
-import 'bootstrap/dist/css/bootstrap.css';
-import './app.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+import './App.css';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -29,21 +27,22 @@ class App extends Component {
     output: null,
     error: null,
     key: 1,
+    check: 0
   }
 
   render() {
     return (
-      <React.Fragment>
+      <React.Fragment className="body">
         <NavBar />
 
-        <div className="container" id="input" >
+        <div className="container input"  >
           <Input ref={this.input} 
               submit={this.onSubmit} />
 
         </div>
 
         <div id='item'>
-          <Paper id="paper" >
+          <Paper elevation={0} id={this.state.check===0?"item":"itempost"} >
             {this.listItems()}
           </Paper>
         </div>
@@ -60,7 +59,7 @@ class App extends Component {
         return (
 
           <div >
-            <Tabs defaultActiveKey={1} activeKey={this.state.key} variant="pills" fill
+            <Tabs className="tabClass" defaultActiveKey={1} activeKey={this.state.key} variant="pills" fill
               onSelect={(k) => { this.setState({ key: k }) }}
               id="controlled-tab-example" >
 
@@ -108,7 +107,7 @@ class App extends Component {
     }
     else {
       return (
-        <p style={{ color: 'red', fontWeight: 'bold' }} className='p-3'>{this.state.error}</p>);
+        <div style={{textAlign:'center', fontSize:'large', color: 'red', fontWeight: 'bold' }} className='p-3'>{this.state.error}</div>);
     }
   }
 
@@ -137,6 +136,7 @@ class App extends Component {
         output: data['output'],
         key: 1,
         error: null,
+        check:1
       })
     }
     else {
@@ -145,6 +145,7 @@ class App extends Component {
         meanings: null,
         examples: null,
         error: data['error'],
+        check:1
       })
     }
     this.input.current.handleLoading(false);

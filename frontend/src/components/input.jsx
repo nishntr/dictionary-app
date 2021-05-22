@@ -18,9 +18,9 @@ export default class Input extends Component {
                         onChange={this.handleChange} className="p-3" placeholder="Enter word..." />
                 </div>
                 <div className=" " style={{ textAlign: "center" }}>
-                    {!this.state.isLoading ? (<button onClick={this.onSubmit} ref={node => (this.btn = node)} className="btn btn-primary  ">Search</button>
+                    {!this.state.isLoading ? (<button className="button" onClick={this.onSubmit} ref={node => (this.btn = node)} >Search</button>
                     )
-                        :   (<Spinner animation="grow" variant="primary" />
+                        :   (<Spinner animation="grow" variant="success" />
                         )}
 
                 </div>
@@ -48,6 +48,11 @@ export default class Input extends Component {
         }
     }
     onSubmit = () =>{
-        this.props.submit(this.state.word);
+        if (this.state.word===''){
+
+        }
+        else{
+            this.props.submit(this.state.word);
+        }
     }
 }
