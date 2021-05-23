@@ -17,32 +17,26 @@
 .input{
     display: flexbox; justify-content: center;align-items: center;
     width: 70%;
+    padding-top: 15px;
     
   }
 
 Paper{
     min-height: 60px;
 }
-  
-.tabClass ul > li > a {
-    background-color: white;
-    color: red;
+
+.nav-link{
+    color: black;
 }
-.tabClass ul > li > a:hover {
-    background-color: pink;
+.nav-link:hover{
+    color: #34eb90;
 }
 
-/* Active tab */
-.tabClass ul > li.active > a,
-.tabClass ul > li.active > a:hover,
-.tabClass ul > li.active > a:focus {
-    background-color: red;
-    color: white;
-}
 
-/* Disabled tab */
-.tabClass ul > li.disabled > a {
-    background-color: lightgray;
-    color: darkgray;
-}
+.nav-link.active {
+    color: white !important;
+    background-color: #34eb90 !important;
+  }
+
+
 

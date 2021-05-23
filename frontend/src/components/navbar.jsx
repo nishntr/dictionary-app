@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import './navbar.css';
 class NavBar extends Component {
     render() {
         return (
-            <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark"  >
+            <Navbar className="shadow" collapseOnSelect expand="sm" bg="dark" variant="dark"  >
                 <Navbar.Brand href="/" className='m-2'>Oxford Dictionary</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">

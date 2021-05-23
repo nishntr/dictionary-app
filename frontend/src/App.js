@@ -1,4 +1,4 @@
-import React, { Component, createRef, useState } from 'react';
+import React, { Component, createRef } from 'react';
 import axios from 'axios';
 import Input from "./components/input";
 import NavBar from "./components/navbar";
@@ -59,7 +59,7 @@ class App extends Component {
         return (
 
           <div >
-            <Tabs className="tabClass" defaultActiveKey={1} activeKey={this.state.key} variant="pills" fill
+            <Tabs  defaultActiveKey={1} activeKey={this.state.key} variant="pills" fill
               onSelect={(k) => { this.setState({ key: k }) }}
               id="controlled-tab-example" >
 

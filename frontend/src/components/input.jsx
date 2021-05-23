@@ -17,7 +17,7 @@ export default class Input extends Component {
                     <input type="text" value={this.state.word} onKeyPress={this.handleKeyPress}
                         onChange={this.handleChange} className="p-3" placeholder="Enter word..." />
                 </div>
-                <div className=" " style={{ textAlign: "center" }}>
+                <div style={{ textAlign: "center",paddingTop:"14px" }}>
                     {!this.state.isLoading ? (<button className="button" onClick={this.onSubmit} ref={node => (this.btn = node)} >Search</button>
                     )
                         :   (<Spinner animation="grow" variant="success" />
